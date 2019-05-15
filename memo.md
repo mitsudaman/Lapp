@@ -194,10 +194,6 @@ vue init nuxt-community/starter-template nuxt
 ### ・Nuxtへアクセス
 http://localhost:3000/
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
 
 
 ▼ローカルにある Laravel を公開サーバーにデプロイ
@@ -222,4 +218,90 @@ bootstrap  config         phpunit.xml   resources  storage     webpack.mix.js
 
 
 
------------------
+-----------------------------------------------------
+
+# mysql
+
+▼Laradockで簡単アプリ作成しようとしたら、速攻でDB周り／日本語問題で躓いたけど、チャチャッと解決
+https://qiita.com/yamazaki/items/d9d3c56f8058ec1e5f65
+
+▼よく使うMySQLコマンド集
+https://qiita.com/CyberMergina/items/f889519e6be19c46f5f4
+
+
+
+(1)laradock/.envを修正
+
+    MYSQL_VERSION=latest
+    MYSQL_DATABASE=default
+    MYSQL_USER=default
+    MYSQL_PASSWORD=secret
+    MYSQL_PORT=3306
+    MYSQL_ROOT_PASSWORD=root
+
+    ↓↓↓↓↓↓↓↓↓↓
+
+
+    MYSQL_VERSION=5.7
+    MYSQL_DATABASE=todo
+    MYSQL_USER=mysql
+    MYSQL_PASSWORD=mysql
+    MYSQL_PORT=3306
+    MYSQL_ROOT_PASSWORD=root
+
+
+▼LaradockのMySQLに接続できなくてはまった話
+https://qiita.com/dnrsm/items/4bd078c17bb0d6888647
+
+(2) .envを反映させる
+
+# volumeなど　削除 
+docker rmi laradock_mysql
+docker volume rm laradock_mysql
+rm -rf ~/.lardock/data/mysql ※消えなかったので手動削除で対応
+
+# 再ビルド
+docker-compose build --no-cache mysql
+
+# docker-compose upして、mysqlのインスタンスに入る
+docker-compose exec mysql bash
+
+# mysqlの対象のDBに入れれば想定通り
+mysql -u default -p 
+secret
+
+
+(3) Lapp/.envを更新
+
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=homestead
+    DB_USERNAME=homestead
+    DB_PASSWORD=secret
+
+    ↓↓↓↓↓↓↓↓↓↓
+
+    DB_CONNECTION=mysql
+    DB_HOST=mysql
+    DB_PORT=3306
+    DB_DATABASE=todo
+    DB_USERNAME=mysql
+    DB_PASSWORD=mysql
+
+
+▼Laradock+MySQL マイグレーションするまで
+https://qiita.com/kengo_9990/items/4fdbfbd47b2ba32f9f35
+
+▼Laravelの開発環境をLaradockを使って構築する
+https://qiita.com/ucan-lab/items/90f74ce801618830e4fc#laradock-mysql%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A
+
+(4)migration いっちゃう
+    root@13f4f487de87:/var/www# php artisan migrate
+    Migration table created successfully.
+    Migrating: 2014_10_12_000000_create_users_table
+    Migrated:  2014_10_12_000000_create_users_table
+    Migrating: 2014_10_12_100000_create_password_resets_table
+    Migrated:  2014_10_12_100000_create_password_resets_table
+    Migrating: 2019_05_13_001641_create_folders_table
+    Migrated:  2019_05_13_001641_create_folders_table
