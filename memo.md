@@ -313,3 +313,19 @@ https://qiita.com/ucan-lab/items/90f74ce801618830e4fc#laradock-mysql%E3%82%B3%E3
 
 # おどれーたこと
 ・value 属性の値には old('title') の実行結果を展開しています。入力エラーがあったとき、入力値はセッションに一時的に保存されます。Laravel が提供する old 関数はそのセッション値を取得します。引数は取得したい入力欄の name 属性です。
+
+# 気になったこと
+入門Laravelチュートリアル
+（7）
+TaskController.php
+public function edit(int $id, int $task_id, EditTask $request)
+{
+    ~~~
+}
+のところ。EditTaskクラスが定義されていないので怒られた。
+
+use App\Http\Requests\CreateTask;
+と同様に
+use App\Http\Requests\EditTask;
+を記述するとOK。
+
