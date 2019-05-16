@@ -308,3 +308,8 @@ https://qiita.com/ucan-lab/items/90f74ce801618830e4fc#laradock-mysql%E3%82%B3%E3
 # 最初の操作
     docker-compose up -d nginx mysql
     docker-compose exec workspace bash
+
+
+
+# おどれーたこと
+・value 属性の値には old('title') の実行結果を展開しています。入力エラーがあったとき、入力値はセッションに一時的に保存されます。Laravel が提供する old 関数はそのセッション値を取得します。引数は取得したい入力欄の name 属性です。
