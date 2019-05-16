@@ -14,6 +14,7 @@
 
 
 
+# Laravel
 
 ▼公式
 http://laradock.io/
@@ -88,10 +89,10 @@ Do not run Composer as root/super user! See https://getcomposer.org/root for det
     - NGINX_HOST_HTTP_PORT=80
     + NGINX_HOST_HTTP_PORT=8001
 
-### ・ブラウザで動作確認
+## ・ブラウザで動作確認
 http://localhost:8001
 
-### ・.envのローカルファイルとdockerのコンテナのディレクトリが紐づいてるとこの設定
+## ・.envのローカルファイルとdockerのコンテナのディレクトリが紐づいてるとこの設定
 
         - APP_CODE_PATH_HOST=../
         + APP_CODE_PATH_HOST=../lapp/
@@ -103,39 +104,33 @@ http://localhost:8001
 
 https://qiita.com/skmt719/items/a296d81150fd7319e71a
 
-### ・コンテナから脱出 停止＆再起動
+## ・コンテナから脱出 停止＆再起動
     exit
     docker-compose stop
     docker-compose up -d nginx mysql phpmyadmin redis workspace
 
     今回はビルドしないのでめっちゃ早いです。
-    
-
-## laravelは起動した！
-## nuxt.js を　導入してほしそうにこっちを見ている
-## 導入しますか？　
-## →はい　
-
-#
-
-## <nuxt.js>
 
 
-### ・nuxt はポート3000 を使うので、あらかじめ開けておく
+
+# <nuxt.js>
+
+
+## ・nuxt はポート3000 を使うので、あらかじめ開けておく
 docker-compose.yml
 
       ports:
         - "${WORKSPACE_SSH_PORT}:22"
         - 3000:3000 ← これ
 
-### ・コンテナ再起動
+## ・コンテナ再起動
 `docker-compose up -d nginx mysql workspace `
 
-### ・workspace コンテナへ再アクセス。
+## ・workspace コンテナへ再アクセス。
 
 `docker-compose exec workspace bash`
 
-### ・テンプレートを使ってnuxtを導入
+## ・テンプレートを使ってnuxtを導入
 `vue init nuxt-community/starter-template nuxt`
 
     /var/www# vue init nuxt-community/starter-template nuxt
@@ -143,13 +138,13 @@ docker-compose.yml
         Command vue init requires a global addon to be installed.
         Please run yarn global add @vue/cli-init and try again.
 
-### ・global に追加
+## ・global に追加
 `yarn global add @vue/cli-init`
 した後も同じエラーがでるので
 `npm install -g @vue/cli-init`
 
 
-### ・[再]テンプレートを使ってnuxtを導入
+## ・[再]テンプレートを使ってnuxtを導入
 vue init nuxt-community/starter-template nuxt
 
 ? Project name nuxt
@@ -158,18 +153,18 @@ vue init nuxt-community/starter-template nuxt
 
 とそれぞれ聞かれるのでエンターでやり過ごす
 
-### ・削除＆ファイル移動
+## ・削除＆ファイル移動
     /var/www# rm package.json # laravelインストール時に生成されるやつは不要。
     /var/www# mv nuxt/package.json package.json #代わりにこっち使う。
     /var/www# mv nuxt/nuxt.config.js nuxt.config.js
 
-### ・npm intall
+## ・npm intall
     /var/www# npm install
 
-### ・yarn intall
+## ・yarn intall
     /var/www# yarn install
 
-### ・package.json 編集
+## ・package.json 編集
 
     {
         "name": "nuxt",
@@ -187,11 +182,11 @@ vue init nuxt-community/starter-template nuxt
         ~ 省略 ~
     }
 
-### ・nuxt起動
+## ・nuxt起動
 
     # yarn dev
 
-### ・Nuxtへアクセス
+## ・Nuxtへアクセス
 http://localhost:3000/
 
 
@@ -255,18 +250,18 @@ https://qiita.com/dnrsm/items/4bd078c17bb0d6888647
 
 (2) .envを反映させる
 
-# volumeなど　削除 
+## volumeなど　削除 
 docker rmi laradock_mysql
 docker volume rm laradock_mysql
 rm -rf ~/.lardock/data/mysql ※消えなかったので手動削除で対応
 
-# 再ビルド
+## 再ビルド
 docker-compose build --no-cache mysql
 
-# docker-compose upして、mysqlのインスタンスに入る
+## docker-compose upして、mysqlのインスタンスに入る
 docker-compose exec mysql bash
 
-# mysqlの対象のDBに入れれば想定通り
+## mysqlの対象のDBに入れれば想定通り
 mysql -u default -p 
 secret
 
@@ -305,3 +300,11 @@ https://qiita.com/ucan-lab/items/90f74ce801618830e4fc#laradock-mysql%E3%82%B3%E3
     Migrated:  2014_10_12_100000_create_password_resets_table
     Migrating: 2019_05_13_001641_create_folders_table
     Migrated:  2019_05_13_001641_create_folders_table
+
+
+
+--------------------------------------------------------------------
+
+# 最初の操作
+    docker-compose up -d nginx mysql
+    docker-compose exec workspace bash
