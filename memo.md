@@ -329,3 +329,55 @@ use App\Http\Requests\CreateTask;
 use App\Http\Requests\EditTask;
 を記述するとOK。
 
+
+
+
+
+
+
+# laradock DB変更 mysql → PostgreSql
+
+(1)laradock .env 
+
+    # POSTGRES_DB=default
+    POSTGRES_DB=sample_db
+    POSTGRES_USER=default
+    POSTGRES_PASSWORD=secret
+    # POSTGRES_PORT=5432
+    POSTGRES_PORT=54320
+    POSTGRES_ENTRYPOINT_INITDB=./postgres/docker-entrypoint-initdb.d
+
+
+#heroku
+(1)herokuのcliを使えるようにする(ローカルにて)
+    
+    $ brew tap heroku/brew && brew install heroku
+
+    ▼heroku 公式サイト
+    https://devcenter.heroku.com/articles/heroku-cli
+
+(2)ログイン
+   $ heroku login
+
+(3)create
+    Lapp $ heroku create
+    Creating app... done, ⬢ stark-ravine-37952
+    https://stark-ravine-37952.herokuapp.com/ | https://git.heroku.com/stark-ravine-37952.git
+
+(4)postgres追加 (heroku作業)
+
+(5)コマンドラインで接続情報を確認
+
+    $ heroku config:get DATABASE_URL
+
+(6)設定
+postgres://DB_USERNAME:DB_PASSWORD@DB_HOST:5432/DB_DATABASE
+を参考に。
+postgres://vszuumtqtccsoy:12948759c15ad39a05bffd7fcf27d17629a479a09fd4916fc52919c425509c4d@ec2-23-21-91-183.compute-1.amazonaws.com:5432/d317ebuu0sitv1
+
+$ heroku config:set DB_CONNECTION=pgsql
+$ heroku config:set DB_HOST=ec2-zz-zz-zzz-zz.compute-1.amazonaws.com
+$ heroku config:set DB_DATABASE=abcd1234
+$ heroku config:set DB_USERNAME=xxxxx
+$ heroku config:set DB_PASSWORD=yyyyy
+
