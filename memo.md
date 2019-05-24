@@ -381,3 +381,15 @@ $ heroku config:set DB_DATABASE=abcd1234
 $ heroku config:set DB_USERNAME=xxxxx
 $ heroku config:set DB_PASSWORD=yyyyy
 
+(7)SendGrid アドオン登録
+
+・クレカ登録
+・verification 用でsms認証
+
+# lighthouse
+
+https://github.com/nuwave/lighthouse
+
+$ composer require nuwave/lighthouse
+$ php artisan vendor:publish --provider="Nuwave\Lighthouse\LighthouseServiceProvider" --tag=schema
+$ composer require mll-lab/laravel-graphql-playground
