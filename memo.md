@@ -305,8 +305,8 @@ https://qiita.com/ucan-lab/items/90f74ce801618830e4fc#laradock-mysql%E3%82%B3%E3
 
 --------------------------------------------------------------------
 
-# 最初の操作
-    docker-compose up -d nginx mysql
+# 最初の操作 laradock配下
+    docker-compose up -d nginx postgres
     docker-compose exec workspace bash
 
 
@@ -393,3 +393,6 @@ https://github.com/nuwave/lighthouse
 $ composer require nuwave/lighthouse
 $ php artisan vendor:publish --provider="Nuwave\Lighthouse\LighthouseServiceProvider" --tag=schema
 $ composer require mll-lab/laravel-graphql-playground
+
+# cors
+https://github.com/barryvdh/laravel-cors
